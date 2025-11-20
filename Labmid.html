@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Event Registration</title>
+
+    <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+    <style>
+        body {
+            display: inline-block;
+            justify-content:space-around;
+            margin: 0;
+            font-family: cursive;
+            background: rgb(231, 191, 215);
+        }
+
+        .container {
+            background: rgb(231, 191, 215);
+            padding: 40px;
+            border-radius: 0px;
+            width: 800px;
+            box-shadow: 0 0 0px rgba(235, 231, 231, 0.3);
+            color: rgb(95, 50, 50);
+        }
+
+        table td { padding: 8px 0; }
+
+        #Registrants {
+            background: rgb(180, 116, 171);
+            padding: 15px;
+            border-radius: 0px;
+            box-shadow: 0 0 0px rgba(211, 43, 43, 0.2);
+            width: auto;
+            margin-top: 20px;
+            display: none;
+             color: rgb(91, 38, 38);
+        }
+    </style>
+
+</head>
+<body>
+
+    <div class="container">
+        <h1 style="text-align: start;">Global Tech Connect</h1>
+        <h3>Registration</h3>
+
+        <form onsubmit="validateForm(event)">
+            <table>
+                <tr><td>UserName</td></tr>
+                <tr><td><input type="text" id="uname" style="padding:10px;border-radius:0px;"></td></tr>
+    <tr><td>Email</td></tr>
+         <tr><td><input type="text" id="email" style="padding:10px;border-radius:0px;"></td></tr>
+
+          <tr><td>Company</td></tr>
+            <tr><td><input type="text" id="company" style="padding:10px;border-radius:0px;"></td></tr><tr><td>Attendance Type</td></tr>
+                <tr>
+            <td><input type="radio" name="attend" value="Virtual"> Virtual<br>
+                <input type="radio" name="attend" value="In Person"> In Person
+                    </td>
+                </tr><tr>
+                    <td>
+                        <input type="submit" value="Submit" 
+                        style="padding:10px 60px;background:rgb(239, 233, 236);color:rgb(157, 49, 49);border:none;border-radius:0px;font-size:20px;">
+                    </td>
+                </tr>
+            </table>
+ </form>
+
+        <button onclick="Show()" style="padding:8px;margin-top:15px; border-radius: 0px; font-size:larger; ">Show Event Analytics</button>
+        <button onclick="Hide()" style="padding:8px;margin-top:15px;border-radius: 0px;font-size:larger;">Hide Event Analytics</button>
+
+        <div id="Registrants">
+            <p>Virtual Registrants: <span id="virtualCount">0</span></p>
+            <p>In Person Registrants: <span id="personCount">0</span></p>
+        </div>
+    </div>
+
+    <script src="FinalTask.js"></script>
+
+<script>
+let virtualCount = 0;
+let personCount = 0;
+
+function validateForm(event) {
+    event.preventDefault();
+
+    const uname = document.getElementById("uname").value;
+    const email = document.getElementById("email").value;
+    const company = document.getElementById("company").value;
+    const attend = document.querySelector("input[name='attend']:checked");
+
+    if (uname === "" || email === "") {
+        alert("Fields cannot be empty");
+        return;
+    }
+
+    if (uname.length < 6) {
+        alert("Username must have at least 6 characters");
+        return;
+    }
+
+    if (company.length > 100) {
+        alert("Company cannot exceed 100 characters");
+        return;
+    }
+
+    if (!attend) {
+        alert("Please select attendance type");
+        return;
+    }
+
+    if (!email.includes("@") || !email.includes(".")) {
+        alert("Invalid Email");
+        return;
+    }
+
+    if (attend.value === "Virtual") {
+        virtualCount++;
+    }
+
+    if (attend.value === "In Person") {
+        personCount++;
+    }
+
+    updateCounts();
+    alert("Registration Successful");
+    event.target.reset();
+}
+
+function updateCounts() {
+    document.getElementById("virtualCount").innerHTML = virtualCount;
+    document.getElementById("personCount").innerHTML = personCount;
+}
+
+function Show() {
+    document.getElementById("Registrants").style.display = "block";
+}
+
+function Hide() {
+    document.getElementById("Registrants").style.display = "none";
+}
+</script>
+
+</body>
+</html>
